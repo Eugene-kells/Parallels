@@ -1,21 +1,23 @@
 public class BallThread extends Thread {
     private Ball b;
+    private BallCanvas canvas;
 
-    public BallThread(Ball ball) {
+    public BallThread(Ball ball, BallCanvas canvas) {
         b = ball;
+        this.canvas = canvas;
     }
 
     @Override
     public void run() {
         try {
-            for (int i = 1; i < 10000; i++) {
+            for (int i = 1; i < 500; i++) {
                 b.move();
-                System.out.println("Thread name = " + Thread.currentThread().getName());
+                b.updateInfo();
                 Thread.sleep(5);
-
             }
         } catch (InterruptedException ex) {
-            System.out.println("The error occured: " + ex.toString());
+            System.out.println("The ball is in the hole! Thread " + Thread.currentThread());
+            canvas.remove(b);
         }
     }
 }
