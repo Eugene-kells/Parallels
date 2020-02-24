@@ -20,13 +20,13 @@ class Ball {
         this.holes = holes;
         this.color = color;
 
-        if (Math.random() < 0.5) {
-            x = new Random().nextInt(this.canvas.getWidth());
-            y = 0;
-        } else {
-            x = 0;
-            y = new Random().nextInt(this.canvas.getHeight());
-        }
+//        if (Math.random() < 0.5) {
+//            x = new Random().nextInt(this.canvas.getWidth());
+//            y = 0;
+//        } else {
+//            x = 0;
+//            y = new Random().nextInt(this.canvas.getHeight());
+//        }
     }
 
     public void draw(Graphics2D g2) {
