@@ -41,10 +41,20 @@ public class BounceFrame extends JFrame {
         buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Ball b = new Ball(canvas, holes);
-                canvas.add(b);
-                BallThread thread = new BallThread(b, canvas);
-                thread.start();
+                if (Math.random() < 0.5) {
+                    Ball b = new Ball(canvas, holes, Color.blue);
+                    canvas.add(b);
+                    BallThread thread = new BallThread(b, canvas);
+                    thread.setPriority(1);
+                    thread.start();
+                }
+                else {
+                    Ball b = new Ball(canvas, holes, Color.red);
+                    canvas.add(b);
+                    BallThread thread = new BallThread(b, canvas);
+                    thread.setPriority(2);
+                    thread.start();
+                }
             }
         });
 
