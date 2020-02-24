@@ -19,5 +19,13 @@ public class CounterThread extends Thread {
             else
                 counter.decrement();
         }
+
+        for (int i = 0; i < operationNum; i++) {
+            counter.applyMethod(isIncrement);
+        }
+
+        for (int i = 0; i < operationNum; i++) {
+            counter.applyBlock(isIncrement);
+        }
     }
 }
