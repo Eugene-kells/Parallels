@@ -76,10 +76,14 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Matrix {
     private ArrayList<ArrayList<Integer>> data;
+    public int x_size;
+    public int y_size;
 
     public Matrix(String filePath) throws Exception {
         data = new ArrayList<>();
@@ -97,6 +101,8 @@ public class Matrix {
             previous_row_size = row.size();
             data.add(row);
         }
+        x_size = data.size();
+        y_size = previous_row_size;
     }
 
     public Matrix(int x, int y) {
@@ -113,6 +119,10 @@ public class Matrix {
 
     public Integer get(int x, int y) {
         return data.get(x).get(y);
+    }
+
+    public void set(int x, int y, int value) {
+        data.get(x).set(y, value);
     }
 
     @Override
