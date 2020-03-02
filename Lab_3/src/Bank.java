@@ -10,7 +10,7 @@ class Bank {
         Arrays.fill(accounts, initialBalance);
     }
 
-    public void transfer(int from, int to, int amount) throws InterruptedException {
+    public synchronized void transfer(int from, int to, int amount) throws InterruptedException {
         accounts[from] -= amount;
         accounts[to] += amount;
         ntransacts++;
