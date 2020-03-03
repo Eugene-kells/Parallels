@@ -1,25 +1,26 @@
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 class Bank {
     public static final int NTEST = 10000;
     private final int[] accounts;
     private long ntransacts = 0;
+    private Semaphore semaphore;
 
-    public Bank(int n, int initialBalance) {
+    public Bank(int n, int initialBalance, Semaphore semaphore) {
         accounts = new int[n];
         Arrays.fill(accounts, initialBalance);
+        this.semaphore = semaphore;
     }
 
     public void transfer(int from, int to, int amount) throws InterruptedException {
-        // We cannot use two different synchronized blocks, since the gap between them will unsynchronize
-        // value of `accounts` and `ntransacts`
-        synchronized (accounts) {
-            accounts[from] -= amount;
-            accounts[to] += amount;
-            ntransacts++;
-            if (ntransacts % NTEST == 0)
-                test();
-        }
+        semaphore.acquire();
+        accounts[from] -= amount;
+        accounts[to] += amount;
+        ntransacts++;
+        if (ntransacts % NTEST == 0)
+            test();
+        semaphore.release();
     }
 
     public void test() {
