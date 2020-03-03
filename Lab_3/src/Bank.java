@@ -10,12 +10,16 @@ class Bank {
         Arrays.fill(accounts, initialBalance);
     }
 
-    public synchronized void transfer(int from, int to, int amount) throws InterruptedException {
-        accounts[from] -= amount;
-        accounts[to] += amount;
-        ntransacts++;
-        if (ntransacts % NTEST == 0)
-            test();
+    public void transfer(int from, int to, int amount) throws InterruptedException {
+        // We cannot use two different synchronized blocks, since the gap between them will unsynchronize
+        // value of `accounts` and `ntransacts`
+        synchronized (accounts) {
+            accounts[from] -= amount;
+            accounts[to] += amount;
+            ntransacts++;
+            if (ntransacts % NTEST == 0)
+                test();
+        }
     }
 
     public void test() {
