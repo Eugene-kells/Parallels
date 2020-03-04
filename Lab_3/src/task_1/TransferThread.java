@@ -1,3 +1,5 @@
+package task_1;
+
 class TransferThread extends Thread {
     private Bank bank;
     private int fromAccount;

@@ -1,3 +1,5 @@
+package task_1;
+
 import java.util.concurrent.Semaphore;
 
 public class UnsyncBankTest {
