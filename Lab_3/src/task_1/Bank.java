@@ -1,28 +1,27 @@
 package task_1;
 
 import java.util.Arrays;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 class Bank {
     public static final int NTEST = 10000;
     private final int[] accounts;
     private long ntransacts = 0;
-    private Semaphore semaphore;
+    private ReentrantLock lock = new ReentrantLock();
 
-    public Bank(int n, int initialBalance, Semaphore semaphore) {
+    public Bank(int n, int initialBalance) {
         accounts = new int[n];
         Arrays.fill(accounts, initialBalance);
-        this.semaphore = semaphore;
     }
 
     public void transfer(int from, int to, int amount) throws InterruptedException {
-        semaphore.acquire();
+        lock.lock();
         accounts[from] -= amount;
         accounts[to] += amount;
         ntransacts++;
         if (ntransacts % NTEST == 0)
             test();
-        semaphore.release();
+        lock.unlock();
     }
 
     public void test() {
