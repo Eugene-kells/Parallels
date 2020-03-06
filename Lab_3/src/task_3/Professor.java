@@ -1,7 +1,6 @@
 package task_3;
 
 import java.sql.*;
-import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Professor extends Thread {
@@ -9,9 +8,11 @@ public class Professor extends Thread {
     protected final String user = "postgres";
     protected final String pass = "admin123";
 
+    private String name;
     private LinkedBlockingQueue<String> students;
 
-    public Professor(LinkedBlockingQueue students) {
+    public Professor(String name, LinkedBlockingQueue students) {
+        this.name = name;
         this.students = students;
     }
 
@@ -35,6 +36,7 @@ public class Professor extends Thread {
         pstmt.setInt(2, Integer.parseInt(student_id));
         pstmt.executeUpdate();
         conn.close();
+        System.out.println(name + " wrote info for student with id " + student_id);
     }
 
 

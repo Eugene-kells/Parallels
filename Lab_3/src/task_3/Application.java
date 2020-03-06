@@ -6,15 +6,15 @@ public class Application {
 
     public static void main(String[] args) {
         LinkedBlockingQueue students = new LinkedBlockingQueue<String>();
-        Professor prof = new Professor(students);
-        Assistent ass_1 = new Assistent(students);
-        Assistent ass_2 = new Assistent(students);
-        Assistent ass_3 = new Assistent(students);
+        Professor prof = new Professor("Professor", students);
+        Assistent ass_1 = new Assistent("Assistant 1", students);
+        Assistent ass_2 = new Assistent("Assistant 2", students);
+        Assistent ass_3 = new Assistent("Assistant 3", students);
         WeekJob job = new WeekJob(students);
         job.start();
         prof.start();
-//        ass_1.start();
-//        ass_2.start();
-//        ass_3.start();
+        ass_1.start();
+        ass_2.start();
+        ass_3.start();
     }
 }
