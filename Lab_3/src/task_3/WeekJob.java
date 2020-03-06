@@ -8,7 +8,7 @@ public class WeekJob extends Thread {
     protected final String user = "postgres";
     protected final String pass = "admin123";
 
-    private LinkedBlockingQueue<String> students;
+    private LinkedBlockingQueue<Student> students;
 
     public WeekJob(LinkedBlockingQueue students) {
         this.students = students;
@@ -25,7 +25,11 @@ public class WeekJob extends Thread {
     }
 
     private ResultSet getStudents() throws SQLException {
-        String SQL = "SELECT id, name, surname, group_id FROM lab.students";
+        String SQL = "SELECT students.id AS id, " +
+                "students.name AS student_name, " +
+                "students.surname AS surname, " +
+                "groups.name AS group_name " +
+                "FROM lab.students JOIN lab.groups ON students.group_id = groups.id";
         Connection conn = connect();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
@@ -40,7 +44,11 @@ public class WeekJob extends Thread {
             while (true) {
                 ResultSet res = getStudents();
                 while (res.next()) {
-                    students.put(res.getString("id"));
+                    Student student = new Student(res.getString("id"),
+                            res.getString("student_name"),
+                            res.getString("surname"),
+                            res.getString("group_name"));
+                    students.put(student);
                 }
                 sleep(10000);
             }

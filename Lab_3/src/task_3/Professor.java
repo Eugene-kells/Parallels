@@ -9,7 +9,7 @@ public class Professor extends Thread {
     protected final String pass = "admin123";
 
     private String name;
-    private LinkedBlockingQueue<String> students;
+    private LinkedBlockingQueue<Student> students;
 
     public Professor(String name, LinkedBlockingQueue students) {
         this.name = name;
@@ -26,17 +26,19 @@ public class Professor extends Thread {
         return conn;
     }
 
-    private void setMark(String student_id) throws SQLException {
+    private void setMark(Student student) throws SQLException {
         String SQL = "INSERT INTO lab.scores (score, student_id) VALUES (?, ?)";
         Connection conn = connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
 
         int random_score = (int) (Math.random() * 101);
         pstmt.setInt(1, random_score);
-        pstmt.setInt(2, Integer.parseInt(student_id));
+        pstmt.setInt(2, Integer.parseInt(student.id));
         pstmt.executeUpdate();
         conn.close();
-        System.out.println(name + " wrote info for student with id " + student_id);
+        String write_str = String.format("%s gave a score for student %s %s (id: %s) from group %s",
+                name, student.name, student.surname, student.id, student.group_name);
+        System.out.println(write_str);
     }
 
 

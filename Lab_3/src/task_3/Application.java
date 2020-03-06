@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Application {
 
     public static void main(String[] args) {
-        LinkedBlockingQueue students = new LinkedBlockingQueue<String>();
+        LinkedBlockingQueue students = new LinkedBlockingQueue<Student>();
         Professor prof = new Professor("Professor", students);
         Assistent ass_1 = new Assistent("Assistant 1", students);
         Assistent ass_2 = new Assistent("Assistant 2", students);
